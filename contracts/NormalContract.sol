@@ -10,7 +10,7 @@ contract NormalContract {
         contractChecker = ContractChecker(_contractChecker);
     }
 
-    function getChecked(uint256 _balance) public returns (string memory) {
+    function getChecked(uint256 _balance) public {
         return contractChecker.interact(_balance);
     }
 }

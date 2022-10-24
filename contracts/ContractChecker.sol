@@ -13,11 +13,7 @@ contract ContractChecker {
         _;
     }
 
-    function interact(uint256 _balance)
-        public
-        isNotContract(msg.sender)
-        returns (string memory)
-    {
+    function interact(uint256 _balance) public isNotContract(msg.sender) {
         balance = _balance;
     }
 }

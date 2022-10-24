@@ -5,3 +5,9 @@
 - Second smart contract: Create a smart contract to interact with the first contract but it will fail due to the check function of the first contract.
 
 - Third smart contract: Create a smart contract to interact with the first smart contract and successfully pass the check function of the first contract.
+
+`npx hardhat test` will run the tests which demonstrate what each contract does:
+
+- First contract: ContractChecker.sol
+- Second contract: NormalContract.sol
+- Third contract: ActuallyAContract.sol
