@@ -10,7 +10,7 @@ contract NormalContract {
         contractChecker = ContractChecker(_contractChecker);
     }
 
-    function getChecked() public view returns (string memory) {
-        return contractChecker.interact();
+    function getChecked(uint256 _balance) public returns (string memory) {
+        return contractChecker.interact(_balance);
     }
 }

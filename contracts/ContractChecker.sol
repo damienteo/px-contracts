@@ -2,6 +2,8 @@
 pragma solidity ^0.8.4;
 
 contract ContractChecker {
+    uint256 public balance;
+
     modifier isNotContract(address _a) {
         uint256 size;
         assembly {
@@ -11,12 +13,11 @@ contract ContractChecker {
         _;
     }
 
-    function interact()
+    function interact(uint256 _balance)
         public
-        view
         isNotContract(msg.sender)
         returns (string memory)
     {
-        return "Not a contract";
+        balance = _balance;
     }
 }

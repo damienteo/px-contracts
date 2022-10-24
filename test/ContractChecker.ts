@@ -2,7 +2,9 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
-import { ContractChecker, NormalContract } from "../typechain-types";
+import { ContractChecker } from "../typechain-types";
+
+const NEXT_BALANCE = 123;
 
 describe("ContractChecker", () => {
   let ContractChecker,
@@ -15,8 +17,15 @@ describe("ContractChecker", () => {
     [owner] = await ethers.getSigners();
   });
 
+  it("should have initial balance of zero", async () => {
+    expect(await contractCheckerContract.balance()).to.equal(0);
+  });
+
   it("accepts non-contract wallet addresses", async () => {
-    expect(await contractCheckerContract.interact()).to.equal("Not a contract");
+    const txn = await contractCheckerContract.interact(NEXT_BALANCE);
+    const response = await txn.wait();
+
+    expect(await contractCheckerContract.balance()).to.equal(NEXT_BALANCE);
   });
 
   it("rejects Normal Contracts", async () => {
@@ -25,8 +34,22 @@ describe("ContractChecker", () => {
       contractCheckerContract.address
     );
 
-    await expect(normalContract.getChecked()).to.be.revertedWith(
+    await expect(normalContract.getChecked(NEXT_BALANCE)).to.be.revertedWith(
       "Contract found!"
     );
+  });
+
+  it("accepts ActuallyAContract, which is meant to bypass isNotContract modifier", async () => {
+    const ActuallyAContract = await ethers.getContractFactory(
+      "ActuallyAContract"
+    );
+    const actuallyAContract = await ActuallyAContract.deploy(
+      contractCheckerContract.address,
+      NEXT_BALANCE
+    );
+
+    await actuallyAContract.deployed();
+
+    expect(await contractCheckerContract.balance()).to.equal(NEXT_BALANCE);
   });
 });
