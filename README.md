@@ -1,13 +1,7 @@
-# Sample Hardhat Project
+# 3 smart contracts with the below functions:
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+- First smart contract: Create a function to check if the “msg.sender” is a contract address or a non-smart contract address by using the “extcodesize” function. This is to protect the smart contract from being interacted by other smart contracts.
 
-Try running some of the following tasks:
+- Second smart contract: Create a smart contract to interact with the first contract but it will fail due to the check function of the first contract.
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
-```
+- Third smart contract: Create a smart contract to interact with the first smart contract and successfully pass the check function of the first contract.
